@@ -59,6 +59,7 @@ app.put("/agent/:id/edit", async (req, res) => {
   const id = req.params.id;
   const newCity = req.body.city;
   await Agent.findOneAndUpdate({ licenseId: id }, { city: newCity });
+  res.send("update");
 });
 
 app.listen(port, function () {
