@@ -58,8 +58,10 @@ app.get("/agents/", async (req, res) => {
 app.put("/agent/:id/edit", async (req, res) => {
   const id = req.params.id;
   const newCity = req.body.city;
-  await Agent.findOneAndUpdate({ licenseId: id }, { city: newCity });
-  res.send("update");
+  if ((await Agents.findOne({ licenseId: id })) !== null) {
+    await Agents.findOneAndUpdate({ licenseId: id }, { city: newCity });
+    res.send("user updated");
+  } else res.status(404).send("no user found");
 });
 
 app.listen(port, function () {
